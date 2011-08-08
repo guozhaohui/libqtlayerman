@@ -1,0 +1,17 @@
+*~
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.swp
+*.rej
+*.so*
+*.rcc
+.qmake.cache
+Makefile
+*.user
+*.log
+.directory
+example/example
