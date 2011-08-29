@@ -25,7 +25,10 @@
 #define QLAYERMANAPPLICATION_H
 
 #include <QApplication>
+#include <QMap>
 #include "ilm_client.h"
+
+#define LS_UNDEF 0xFFFFFFFF
 
 class QWidget;
 
@@ -38,17 +41,17 @@ public:
 
     virtual bool notify(QObject *receiver, QEvent *event);
 
-    void setLayer(t_ilm_layer layer);
-    void setSurface(t_ilm_layer surface);
-    bool registerWindow(QWidget *win, t_ilm_layer layer = 0, t_ilm_surface surface = 0);
+    void setSurface(t_ilm_surface surfaceId);
+    void setLayer  (t_ilm_layer   layerId);
+    bool registerWindow(QWidget *win, t_ilm_surface surfaceId = LS_UNDEF, t_ilm_layer layerId = LS_UNDEF);
 
 private:
     void parseLayerManArgs();
 
-    bool           lm_initialized;
-    t_ilm_layer    layerid;
-    t_ilm_surface  surfaceid;
-    QWidget       *window;
+    bool          m_initialized;
+    QMap<QWidget*, t_ilm_surface> m_windows;
+    t_ilm_layer   m_layerId;
+    t_ilm_surface m_surfaceId;
 };
 
 #endif //  QLAYERMANAPPLICATION_H

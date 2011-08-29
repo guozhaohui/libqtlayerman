@@ -3,7 +3,7 @@ Abstract
 The qtlayerman library allows to run Qt applications controlled by the 
 Genivi Layer Manager.
 
-An sample Qt application can be found in example/
+A sample Qt application can be found in example/
 
 You will need to have Qt for X11 installed.
 
@@ -15,10 +15,9 @@ The LayerManager has to be build and installed.
  -DDBUS_ARCH_INCLUDE_DIR=/usr/lib/i386-linux-gnu/dbus-1.0/include/)
 Only the GLX version has been tested so far.
 
-To building libqtlayerman and the example invoke the following commands in the 
+To build libqtlayerman and the example invoke the following commands in the
 libqtlayerman directory:
 $ qmake    # or /path/to/specific/qt/version/bin/qmake
-$ make
 $ make install
 The library libqtlayerman will be installed in Qt's lib folder.
 
@@ -29,7 +28,7 @@ Start X Server, LayerManager, LayerManagerClientExample and the Qt app:
 $ X &
 $ export DISPLAY=:0
 $ LayerManagerService/LayerManagerService &
-$ LayerManagerExamples/LayerManagerClientExample/LayerManagerClientExample &
+$ LayerManagerExamples/LayerManagerClientExample/LayerManagerClientExample
 $ cd example
 $ ./example
 
@@ -47,23 +46,18 @@ Layer and Surface assignment
 ============================
 The layer and surface, where the top-level window should be placed is determined
 as follows:
-1. As command line arguments ("-layer" and "-surface"), e.g.
-   ./cube -layer 2000 -surface 20
-   If provided, these values will overwrite the values below.
-2. By QLayerManApplication method calls:
-   registerWindow(QWidget *win, t_ilm_layer layer = 0, t_ilm_surface surface = 0)
-   setLayer(t_ilm_layer layer);
-   setSurface(t_ilm_layer surface);
-3. If none of the above is given, the following default values are used:
-   Layer:   2000
-   Surface:   20
+1. By QLayerManApplication method calls:
+   registerWindow(QWidget *win, t_ilm_surface surfaceId = 0xFFFFFFFF,
+                                t_ilm_layer   layerId   = 0xFFFFFFFF);
+   setSurface(t_ilm_surface surfaceId);
+   setLayer  (t_ilm_layer   layerId);
+2. As command line arguments ("-layer" and "-surface"), e.g.
+   ./example -surface 20 -layer 2000
+3. If none of the above is given, the layer defaults to 2000 and the surface
+   will be determined by the layer manager.
 
 Limitations and open issues
 ===========================
-1. Only one top-level window per Qt application is supported
-2. Input (mouse and keyboard) is not supported yet
-3. Only positioning of the top level window from Qt is supported (though the
-   LayerManager doesn't support it currently)
-4. Layer and surface with ID zero cannot be used (will become default values
-   as given above)
+1. Only positioning of the top level window from Qt is supported (e.g. setting
+   opacity etc. won't work)
 
