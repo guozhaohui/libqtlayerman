@@ -1,0 +1,22 @@
+This application can be used to control some parts of the layermanager service.
+It is supposed to run on a host that uses the D-Bus session bus over ethernet
+to communicate with the layermanager service on the target.
+
+Target setup:
+=============
+Add the following in the busconfig section of /etc/dbus-1/session.conf:
+
+    <auth>ANONYMOUS</auth>
+    <allow_anonymous/>
+    <listen>tcp:host=0.0.0.0,port=12434</listen>
+
+Before the service is started, export the following:
+    export LM_USE_SESSION_BUS=enable
+
+
+Host setup:
+===========
+Before the controller is invoked, export the following (adapt the IP address
+to match your target):
+    export DBUS_SESSION_BUS_ADDRESS=tcp:host=172.25.165.171,port=12434
+    export LM_USE_SESSION_BUS=enable
