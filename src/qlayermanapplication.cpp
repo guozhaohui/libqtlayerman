@@ -134,6 +134,8 @@ bool QLayerManApplication::registerWindow(QWidget *win, t_ilm_surface surfaceId,
                                      ILM_PIXELFORMAT_RGBA_8888, &surfaceId) == ILM_SUCCESS
                 && ilm_layerAddSurface(layerId, surfaceId) == ILM_SUCCESS
                 && ilm_surfaceSetVisibility(surfaceId, ILM_TRUE) == ILM_SUCCESS
+                && ilm_surfaceSetDestinationRectangle(surfaceId, 0, 0, win->width(), win->height()) == ILM_SUCCESS
+                && ilm_surfaceSetSourceRectangle(surfaceId, 0, 0, win->width(), win->height()) == ILM_SUCCESS
                 && ilm_commitChanges() == ILM_SUCCESS;
 
     if(success) {
